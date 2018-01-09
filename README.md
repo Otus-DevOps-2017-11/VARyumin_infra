@@ -24,5 +24,5 @@ someinternalhost
 ```
 
 ### Конфигурация подключения
-Хост bastion, IP: 104.199.6.214, внутр. IP: 10.132.0.2
-Хост: someinternalhost, внутр. IP: 10.132.0.3
+* Хост bastion, IP: 104.199.6.214, внутр. IP: 10.132.0.2
+* Хост: someinternalhost, внутр. IP: 10.132.0.3
