@@ -9,8 +9,8 @@ sudo apt update
 sudo apt install -y ruby-full ruby-bundler build-essential mongodb-org
 
 # Enable autostart and start service
-systemctl enable mongod
-systemctl start mongod
+sudo systemctl enable mongod
+sudo systemctl start mongod
 
 # Download app, install dependencies and start app
 cd /home/appuser
