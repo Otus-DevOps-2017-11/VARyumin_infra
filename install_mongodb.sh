@@ -12,16 +12,6 @@ sudo apt update
 # Install mongod
 sudo apt install -y mongodb-org
 
-# Checked install soft
-mongod --version > /dev/null 2>&1
-if [ $? -ne 0 ];
-then
-        echo "Something went wrong, MongoDB is not installed"
-        exit 1
-else
-        # Enable autostart and start service
-        sudo systemctl enable mongod
-        sudo systemctl start mongod
-        echo "Сhecked MongoDB ... OK!"
-        exit 0
-fi
+# Enable autostart and start service
+sudo systemctl enable mongod
+sudo systemctl start mongod
