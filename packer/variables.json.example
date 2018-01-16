@@ -1,0 +1,5 @@
+{
+  "project_id": "name_project-id",
+  "source_image_family": "name_source_image",
+  "machine_type": "GCP type machine"
+}

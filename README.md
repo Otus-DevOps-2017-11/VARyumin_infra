@@ -88,3 +88,25 @@ gcloud compute firewall-rules create default-puma-server \
 --priority=1000
 
 ```
+## Homework 7
+#### Создание image HashiCorp Packer
+```
+packer build \
+-var-file=variables.json \
+immutable.json
+```
+#### Дальше воспользоваться gcloud
+Use [Google Cloud Platform](https://cloud.google.com/)
+```
+gcloud compute instances create reddit-app \
+  --boot-disk-size=10GB \
+  --image-family reddit-full \
+  --machine-type=f1-micro \
+  --tags puma-server \
+  --restart-on-failure \
+  --zone=europe-west1-d
+```
+### Или одним скриптом
+```
+config-scripts/homework-07.sh
+```
