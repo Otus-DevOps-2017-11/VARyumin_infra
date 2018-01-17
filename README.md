@@ -110,3 +110,36 @@ gcloud compute instances create reddit-app \
 ```
 config-scripts/homework-07.sh
 ```
+
+## Homework 8
+#### Самостятельное задание выполнено:
+1. Определил input переменную *private_key_path* для приватного ключа.
+   Файл: variables.tf
+   ```terraform
+   variable private_key_path {
+      description = "Path to the private key used for ssh access"
+   }
+   ```
+   Файл: terraform.tfvars Но так как он не публикуется. То пример заполнения можно увидеть в файле: terraform.tfvars.example
+   ```terraform
+   private_key_path = "~/.ssh/appuser"
+   ```
+2. Определил input переменную *zone* для задания зоны в ресурсе "google_compute_instance" "app".
+   Файл: variables.tf
+   ```terraform
+   variable zone {
+     description = "Zone"
+     default     = "europe-west1-b"
+   }
+   ```
+   Значение в файле: terraform.tfvars не задано, в проекте используется значение по умолчанию.
+3. Произведено форматирвоание с помощью команды **terrafrom frm** Terraform самостоятельно ищет файл с расширением .tf и производит форматирование в каждом файле.
+4. Создан файл terraform.tfvars.example для примера заполнения файла terraform.tfvars с реальными данными.
+
+#### Задание со звездочкой:
+```
+Если какой-то ключ добавлен "руками", без участия Terraform, то Terraform о нем ничего не знает и просто затирает этот ключ.
+```
+Текущий main.tf уже настроен на поднятие 2-х инстансов и настройки балансировки с пробросов порта с 80 на 9292.
+По текущей схемы:
+![LB Google](https://forward2.herokuapp.com/cloud/solutions/images/ilb-haproxy-network-lb-diagram.png?hl=en-GB) 
