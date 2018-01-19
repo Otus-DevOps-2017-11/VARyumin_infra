@@ -1,5 +1,2 @@
-project = "id_project"
-public_key_path = "path_to_file_pub_key"
-private_key_path = "path_to_file_pri_key"
-disk_image = "name_image"
-user = "ssh_user"
+project = "DEFAULT_PRIJECT"
+region = "europe-west1"
