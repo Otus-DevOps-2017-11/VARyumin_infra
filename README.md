@@ -146,4 +146,4 @@ config-scripts/homework-07.sh
 
 ## Homework 9
 
-<img src="src/tree_terraform " width="100">
+<img src="src/tree_terraform " width="500">
