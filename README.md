@@ -146,4 +146,4 @@ config-scripts/homework-07.sh
 
 ## Homework 9
 
-![Tree](src/tree_terraform)
+![Tree](src/tree_terraform | width=100)
