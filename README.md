@@ -142,4 +142,8 @@ config-scripts/homework-07.sh
 ```
 Текущий main.tf уже настроен на поднятие 2-х инстансов и настройки балансировки с пробросов порта с 80 на 9292.
 По текущей схемы:
-![LB Google](https://forward2.herokuapp.com/cloud/solutions/images/ilb-haproxy-network-lb-diagram.png?hl=en-GB) 
+![LB Google](https://forward2.herokuapp.com/cloud/solutions/images/ilb-haproxy-network-lb-diagram.png?hl=en-GB)
+
+## Homework 9
+
+![Tree](src/tree_terraform)
