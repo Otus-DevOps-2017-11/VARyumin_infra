@@ -142,4 +142,49 @@ config-scripts/homework-07.sh
 ```
 Текущий main.tf уже настроен на поднятие 2-х инстансов и настройки балансировки с пробросов порта с 80 на 9292.
 По текущей схемы:
-![LB Google](https://forward2.herokuapp.com/cloud/solutions/images/ilb-haproxy-network-lb-diagram.png?hl=en-GB) 
+![LB Google](https://forward2.herokuapp.com/cloud/solutions/images/ilb-haproxy-network-lb-diagram.png?hl=en-GB)
+
+## Homework 9
+
+<img src="src/tree_terraform " width="500">
+
+* Созданы 2 окружения:
+ ```
+ - stage
+ - prod
+ ```
+* Параметризированны конфигурации модулей
+* Конфигурационные файлы отформатированны
+
+#### Задание со звездочкой:
+* State перенесен в Google Cloud Storage
+* Применить изменения с использованием:
+```
+terraform init -backend-config=backend.tfvars.example
+```
+#### Задание со звездочкой:
+* Добавлен provisioner для деплоя приложения:
+```
+  provisioner "file" {
+    content     = "${data.template_file.pumaservice.rendered}"
+    destination = "/tmp/puma.service"
+  }
+
+  provisioner "remote-exec" {
+    script = "${path.module}/files/deploy.sh"
+  }
+```
+* Добавлен provisioner для конфигурации базы данных:
+```
+  provisioner "file" {
+    content     = "${data.template_file.mongod-config.rendered}"
+    destination = "/tmp/mongod.conf"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mv /tmp/mongod.conf /etc/mongod.conf",
+      "sudo systemctl restart mongod",
+    ]
+  }
+```

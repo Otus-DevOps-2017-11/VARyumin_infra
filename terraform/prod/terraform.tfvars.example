@@ -1,0 +1,17 @@
+project = "DEAFULT_PROJECT_NAME"
+
+public_key_path = "~/.ssh/appuser.pub"
+
+private_key_path = "~/.ssh/appuser"
+
+app_name = "prod-reddit-app"
+
+db_name = "prod-db-app"
+
+mongo_rule_name = "prod-allow-mongo"
+
+puma_rule_name = "prod-allow-puma"
+
+app_disk_image = "reddit-app-base"
+
+db_disk_image = "reddit-db-base"

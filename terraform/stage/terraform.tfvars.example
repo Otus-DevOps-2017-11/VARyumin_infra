@@ -1,0 +1,17 @@
+project = "DEAFULT_PROJECT_NAME"
+
+public_key_path = "~/.ssh/appuser.pub"
+
+private_key_path = "~/.ssh/appuser"
+
+app_name = "stage-reddit-app"
+
+db_name = "stage-db-app"
+
+mongo_rule_name = "stage-allow-mongo"
+
+puma_rule_name = "stage-allow-puma"
+
+app_disk_image = "reddit-app-base"
+
+db_disk_image = "reddit-db-base"
