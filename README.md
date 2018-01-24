@@ -277,4 +277,4 @@ dbserver | SUCCESS | rc=0 >>
 Я так понимаю что Ansible параллельно выполняет команду uptime на всех хостах а не последовательно по хосту.
 Потому что в первом случаи мне первым вернулся результат с dbserver, а во втором случаи appserver
 
-* Почитана и разобрана статья из документации Ansible "Developing Dynamic Inventory Sources"
+* Прочитана и разобрана статья из документации Ansible "Developing Dynamic Inventory Sources"
