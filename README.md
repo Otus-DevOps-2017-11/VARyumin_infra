@@ -190,7 +190,7 @@ terraform init -backend-config=backend.tfvars.example
 ```
 
 ## Homework 9
-* Созданы 3 инфентори файла:
+* Созданы 4 инфентори файла:
 ```
 - inventory :
 ```
@@ -234,6 +234,20 @@ db:
       }
     }
   }
+}
+```
+Добавил файл для поддержки Ansible 2.0
+```
+- inventory_2.0.json :
+```
+```
+{
+    "appserver": {
+        "hosts": ["35.189.77.52"]
+    },
+    "dbserver": {
+        "hosts": ["35.189.92.23"]
+    }
 }
 ```
 * Проверка inventory.json:
