@@ -189,7 +189,7 @@ terraform init -backend-config=backend.tfvars.example
   }
 ```
 
-## Homework 9
+## Homework 10
 * Созданы 4 инфентори файла:
 ```
 - inventory :
