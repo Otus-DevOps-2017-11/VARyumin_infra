@@ -188,3 +188,79 @@ terraform init -backend-config=backend.tfvars.example
     ]
   }
 ```
+
+## Homework 9
+* Созданы 3 инфентори файла:
+```
+- inventory :
+```
+```
+[app]
+appserver ansible_host=35.189.77.52
+
+[db]
+dbserver ansible_host=35.189.92.235
+```
+```
+- inventory.yml :
+```
+```
+app:
+  hosts:
+    appserver:
+      ansible_host: 35.189.77.52
+
+db:
+  hosts:
+    dbserver:
+      ansible_host: 35.189.92.235
+```
+```
+- inventory.json :
+```
+```
+{
+  "app": {
+    "hosts": {
+      "appserver": {
+        "ansible_host": "35.189.77.52"
+      }
+    }
+  },
+  "db": {
+    "hosts": {
+      "dbserver": {
+        "ansible_host": "35.189.92.235"
+      }
+    }
+  }
+}
+```
+* Проверка inventory.json:
+
+1.
+```
+ansible all -m command -a uptime -i inventory.json
+
+dbserver | SUCCESS | rc=0 >>
+ 07:35:11 up 23:36,  1 user,  load average: 0.00, 0.00, 0.00
+
+appserver | SUCCESS | rc=0 >>
+ 07:35:11 up 23:35,  1 user,  load average: 0.00, 0.00, 0.00
+
+```
+
+2.
+```
+ansible all -m command -a uptime -i inventory.json
+appserver | SUCCESS | rc=0 >>
+ 07:35:40 up 23:36,  1 user,  load average: 0.00, 0.00, 0.00
+
+dbserver | SUCCESS | rc=0 >>
+ 07:35:40 up 23:37,  1 user,  load average: 0.00, 0.00, 0.00
+```
+
+Я так понимаю что Ansible параллельно выполняет команду uptime на всех хостах а не последовательно по хосту.
+Потому что в первом случаи мне первым вернулся результат с dbserver, а во втором случаи appserver
+
+* Почитана и разобрана статья из документации Ansible "Developing Dynamic Inventory Sources"
