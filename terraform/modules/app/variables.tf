@@ -8,7 +8,7 @@ variable private_key_path {
 
 variable zone {
   description = "Zone"
-  default     = "europe-west1-b"
+  default     = "europe-west2-c"
 }
 
 variable app_name {
