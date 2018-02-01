@@ -305,6 +305,7 @@ ansible-playbook --inventory-file=/path/to/terraform-inventory site.yml
 
 ## Homework 12
 
+#### Структура директории ansible:
 ```
 .
 |-- ansible.cfg
