@@ -302,3 +302,159 @@ terraform-inventory у меет работать не только с GCP.
 ```bash
 ansible-playbook --inventory-file=/path/to/terraform-inventory site.yml
 ```
+
+## Homework 12
+
+```
+.
+|-- ansible.cfg
+|-- environments
+|   |-- prod
+|   |   |-- group_vars
+|   |   |   |-- all
+|   |   |   |-- app
+|   |   |   `-- db
+|   |   |-- inventory
+|   |   `-- requirements.yml
+|   `-- stage
+|       |-- group_vars
+|       |   |-- all
+|       |   |-- app
+|       |   `-- db
+|       |-- inventory
+|       `-- requirements.yml
+|-- old
+|   |-- files
+|   |   `-- puma.service
+|   |-- inventory.json
+|   |-- inventory.yml
+|   |-- inventory_2.0.json
+|   `-- templates
+|       |-- db_config.j2
+|       `-- mongod.conf.j2
+|-- playbooks
+|   |-- app.yml
+|   |-- db.yml
+|   |-- deploy.yml
+|   |-- packer_app.yml
+|   |-- packer_db.yml
+|   |-- reddit_app_multiple_plays.yml
+|   |-- reddit_app_one_play.yml
+|   `-- site.yml
+`-- roles
+    |-- app
+    |   |-- README.md
+    |   |-- defaults
+    |   |   `-- main.yml
+    |   |-- files
+    |   |   `-- puma.service
+    |   |-- handlers
+    |   |   `-- main.yml
+    |   |-- meta
+    |   |   `-- main.yml
+    |   |-- tasks
+    |   |   `-- main.yml
+    |   |-- templates
+    |   |   `-- db_config.j2
+    |   |-- tests
+    |   |   |-- inventory
+    |   |   `-- test.yml
+    |   `-- vars
+    |       `-- main.yml
+    |-- db
+    |   |-- README.md
+    |   |-- defaults
+    |   |   `-- main.yml
+    |   |-- files
+    |   |-- handlers
+    |   |   `-- main.yml
+    |   |-- meta
+    |   |   `-- main.yml
+    |   |-- tasks
+    |   |   `-- main.yml
+    |   |-- templates
+    |   |   `-- mongod.conf.j2
+    |   |-- tests
+    |   |   |-- inventory
+    |   |   `-- test.yml
+    |   `-- vars
+    |       `-- main.yml
+    `-- jdauphant.nginx
+        |-- README.md
+        |-- Vagrantfile
+        |-- ansible.cfg
+        |-- defaults
+        |   `-- main.yml
+        |-- handlers
+        |   `-- main.yml
+        |-- meta
+        |   `-- main.yml
+        |-- tasks
+        |   |-- cloudflare_configuration.yml
+        |   |-- configuration.yml
+        |   |-- ensure-dirs.yml
+        |   |-- installation.packages.yml
+        |   |-- main.yml
+        |   |-- nginx-official-repo.yml
+        |   |-- remove-defaults.yml
+        |   |-- remove-extras.yml
+        |   |-- remove-unwanted.yml
+        |   `-- selinux.yml
+        |-- templates
+        |   |-- auth_basic.j2
+        |   |-- config.conf.j2
+        |   |-- config_cloudflare.conf.j2
+        |   |-- config_stream.conf.j2
+        |   |-- nginx.conf.j2
+        |   |-- nginx.repo.j2
+        |   `-- site.conf.j2
+        |-- test
+        |   |-- custom_bar.conf.j2
+        |   |-- example-vars.yml
+        |   `-- test.yml
+        `-- vars
+            |-- Debian.yml
+            |-- FreeBSD.yml
+            |-- Solaris.yml
+            |-- empty.yml
+            `-- main.yml
+
+
+```
+####Выполнена самостоятельная работа:
+```
+ - Добавьте в конфигурацию терраформа открытие 80 порта для инстанса приложения:
+```
+
+```
+ resource "google_compute_firewall" "firewall_nginx" {
+   name    = "default-allow-nginx"
+   network = "default"
+
+   allow {
+     protocol = "tcp"
+     ports    = ["80"]
+   }
+
+   source_ranges = "${var.source_ranges}"
+ }
+```
+
+```
+ - Добавьте вызов роли jdauphant.nginx в плейбук app.yml
+```
+
+```
+- name: Configure App
+  hosts: app
+  become: true
+
+  roles:
+    - app
+    - jdauphant.nginx
+```
+
+```
+ - Примените плейбук site.yml для окружения stage и проверьте, что приложение теперь доступно на 80 порту:
+```
+<img src="http://snappyimages.nextwavesrl.netdna-cdn.com/img/3526981823aa06e2357f55665d7bdde0.png" width="500">
