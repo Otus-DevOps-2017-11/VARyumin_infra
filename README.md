@@ -380,46 +380,6 @@ ansible-playbook --inventory-file=/path/to/terraform-inventory site.yml
     |   |   `-- test.yml
     |   `-- vars
     |       `-- main.yml
-    `-- jdauphant.nginx
-        |-- README.md
-        |-- Vagrantfile
-        |-- ansible.cfg
-        |-- defaults
-        |   `-- main.yml
-        |-- handlers
-        |   `-- main.yml
-        |-- meta
-        |   `-- main.yml
-        |-- tasks
-        |   |-- cloudflare_configuration.yml
-        |   |-- configuration.yml
-        |   |-- ensure-dirs.yml
-        |   |-- installation.packages.yml
-        |   |-- main.yml
-        |   |-- nginx-official-repo.yml
-        |   |-- remove-defaults.yml
-        |   |-- remove-extras.yml
-        |   |-- remove-unwanted.yml
-        |   `-- selinux.yml
-        |-- templates
-        |   |-- auth_basic.j2
-        |   |-- config.conf.j2
-        |   |-- config_cloudflare.conf.j2
-        |   |-- config_stream.conf.j2
-        |   |-- nginx.conf.j2
-        |   |-- nginx.repo.j2
-        |   `-- site.conf.j2
-        |-- test
-        |   |-- custom_bar.conf.j2
-        |   |-- example-vars.yml
-        |   `-- test.yml
-        `-- vars
-            |-- Debian.yml
-            |-- FreeBSD.yml
-            |-- Solaris.yml
-            |-- empty.yml
-            `-- main.yml
-
 
 ```
 #### Выполнена самостоятельная работа:
