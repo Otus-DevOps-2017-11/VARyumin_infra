@@ -419,3 +419,77 @@ ansible-playbook --inventory-file=/path/to/terraform-inventory site.yml
  - Примените плейбук site.yml для окружения stage и проверьте, что приложение теперь доступно на 80 порту:
 ```
 <img src="http://snappyimages.nextwavesrl.netdna-cdn.com/img/3526981823aa06e2357f55665d7bdde0.png" width="500">
+
+## Домашнаяя работа 13
+* описали для Vagrant две виртуалки в Virtualbox
+* Создали/запустили эти две виртуалки appsever и dbserver посредством vagrant up
+* Проверили их доступность для хоста и друг для друга
+
+```
+[alfar@alfarPC ansible (ansible-4)]$ vagrant status
+Current machine states:
+
+dbserver                  running (virtualbox)
+appserver                 running (virtualbox)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.
+[alfar@alfarPC ansible (ansible-4)]$ vagrant ssh appserver
+Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-112-generic x86_64)
+Last login: Sat Feb 10 14:43:14 2018 from 10.0.2.2
+vagrant@appserver:~$ ping -c 2 10.10.10.10
+PING 10.10.10.10 (10.10.10.10) 56(84) bytes of data.
+64 bytes from 10.10.10.10: icmp_seq=1 ttl=64 time=0.385 ms
+64 bytes from 10.10.10.10: icmp_seq=2 ttl=64 time=0.256 ms
+
+--- 10.10.10.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1005ms
+rtt min/avg/max/mdev = 0.256/0.320/0.385/0.066 ms
+```
+
+#### Доработка ролей. Провижининг.
+* Добавили в Vagrantfile провижининг ansible для dbserver
+* Добавили в ansible еще один playbook c raw task, который проверяет и устанавливает питон если необходимо.
+* Доработали роль db, перенеся в неё установку и настройку mongod на основе плейбука packer_db.yml
+* Применили доработанный провеижен на dbserver
+* Проверили с appserver доступность mongod на dbserver
+* Аналогично доработали роль app, добавили провижинингдля appserver, и применили.
+* Однако ошибка - юзера нет в виртуалках
+* Параметризовали юзера для выкладки как deploy_user. Дефолт - appuser, переопределено в Vagrantfile через extra_vars как ubuntu
+* Применение `vagrant provision appserver` упал с ошибкой
+* Зашел на сервер `vagrant ssh appserver` и выполнил команду `whoami` результат `vagrant` поменял extra_vars на vagrant
+* Проверили доступность приложения по адресу 10.10.10.20:9292 - работает
+* Выполнил задание со зведочкой по nginx
+```
+nginx_sites:
+  default:
+    - listen 80 default_server
+    - server_name _
+    - root "{{ nginx_sites_default_root }}"
+    - location / {proxy_pass http://ruby;}
+nginx_configs:
+  upstream:
+      - upstream ruby { server 127.0.0.1:9292 weight=10; }
+```
+* Уничтожили всё `vagrant destroy -f` и прересоздали заново `vagrant up`
+* Вновь проверили доступность приложения по адресу 10.10.10.20 - работает. Вновь уничтожили всё.
+#### Тестирование роли
+* Установили в виртуалэнв molecule и зависимости
+* Создали заготовку тестов для роли db в папке `ansible/roles/db`: `molecule init scenario --scenario-name default -r db -d vagrant`
+* добавили проверки сервиса монго:  запущен, включен, есть конфиг, в конфиге настроено на прослушивание на всех интерфейсах (0.0.0.0)
+* Создали виртуалку средствами molecule (но она по сути пустая, без применного ансибла)
+* Поправили плейбук который сгенерен molecule (выполнение из под судо (become), переменная mongo_bind_ip)
+* Применили плейбук, созданный molecule `molecule converge`
+* Прогнали тесты `molecule verify`
+* (разобрали виртуалки через `molecule destroy`)
+#### Самостоятельное задание
+* Добавили проверку что БД слушает по порту 27017
+```
+#Check if MongoDB is listening on 27017
+def test_mongo_running_and_enabled(host):
+    port = host.socket("tcp://27017")
+    assert port.is_listening
+```
+* Заменили в плейбуках packer_db и packer_app таски на роли db и app
+* Пофиксили пути к плейбукам в шаблонах packer: app.json и db.json
